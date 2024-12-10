@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ingatlanárak API-k Összehasonlítása</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <style>
+        body {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        h1 {
+            width: 100%;
+            text-align: center;
+        }
+
+        h2 {
+            margin-top: 0;
+            width: 100%;
+            text-align: center;
+        }
+
+        .map-container {
+            width: 48%;
+            height: 400px;
+            border: 1px solid #ccc;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Ingatlanárak API-k Összehasonlítása</h1>
+    <h2>OSM, Azure, Maps, ArcGis, MapBox</h2>
+    <div id="osm-map" class="map-container"></div>
+    <div id="azure-map" class="map-container"></div>
+    <div id="esri-map" class="map-container"></div>
+    <div id="mapbox-map" class="map-container"></div>
+
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <script>
+        // Ingatlan címek és árak
+        const properties = [
+            { address: "Budapest, Kossuth Lajos tér 1", price: "120,000,000 Ft" },
+            { address: "Budapest, Andrássy út 60", price: "95,000,000 Ft" },
+            { address: "Budapest, Deák Ferenc tér 1", price: "150,000,000 Ft" },
+            { address: "Budapest, Bajcsy-Zsilinszky út 78", price: "80,000,000 Ft" },
+            { address: "Budapest, Széchenyi István tér 7", price: "110,000,000 Ft" },
+            { address: "Budapest, József Attila utca 4", price: "70,000,000 Ft" },
+            { address: "Budapest, Szabadság tér 1", price: "130,000,000 Ft" },
+            { address: "Budapest, Károly körút 1", price: "90,000,000 Ft" },
+            { address: "Budapest, Rákóczi út 1", price: "100,000,000 Ft" },
+            { address: "Budapest, Váci utca 1", price: "85,000,000 Ft" }
+        ];
+
+        // Kiindulópont, térkép középpontja
+        const initialCenter = [47.4979, 19.0402];
+        const zoomLevel = 13;
+
+        // Térképek létrehozása
+        const osmMap = L.map('osm-map').setView(initialCenter, zoomLevel);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(osmMap);
+
+        const azureMap = L.map('azure-map').setView(initialCenter, zoomLevel);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(azureMap);
+
+        const esriMap = L.map('esri-map').setView(initialCenter, zoomLevel);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(esriMap);
+
+        const mapboxMap = L.map('mapbox-map').setView(initialCenter, zoomLevel);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(mapboxMap);
+
+        const esriToken =
+            "3NKHt6i2urmWtqOuugvr9ZqW0GIKtdFc2j3kk2JKynHG8wswMhfVpwr-L0xcKX5y2evLsd8Qct2vYUFSriZfaXM6dNg7uN6cRzzfxPK21BOT8rTtiYmxgwBCf5w4vdll";
+        const subscriptionKey = "CYQw7omTAZcgm1piZ7UJstUgO3yKhHGIl773ltm2WGtKjb5hq10gJQQJ99ALAC5RqLJ5BCW0AAAgAZMP1uUu";
+        const mapboxToken = "pk.eyJ1Ijoia2Fta2E0MjciLCJhIjoiY200aGFsNjM1MDR5NTJyczRpdHZvYTQ4bCJ9.DItIMTrJxVtcx7EQcCkXCw";
+
+
+        // Geokódoló függvények
+        function geocodeOSM(property) {
+            return fetch(`https://nominatim.openstreetmap.org/search?q=${encodeURIComponent(property.address)}&format=json&limit=1`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.length > 0) {
+                        return {
+                            lat: parseFloat(data[0].lat),
+                            lon: parseFloat(data[0].lon),
+                            popupText: `<strong>${property.address}</strong><br>Ár: ${property.price}`
+                        };
+                    }
+                });
+        }
+
+        function geocodeAzureMaps(property) {
+            return fetch(`https://atlas.microsoft.com/search/address/json?api-version=1.0&subscription-key=${subscriptionKey}&query=${encodeURIComponent(property.address)}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.results && data.results.length > 0) {
+                        return {
+                            lat: data.results[0].position.lat,
+                            lon: data.results[0].position.lon,
+                            popupText: `<strong>${property.address}</strong><br>Ár: ${property.price}`
+                        };
+                    }
+                });
+        }
+
+        function geocodeEsri(property) {
+            return fetch(`https://geocode.arcgis.com/arcgis/rest/services/World/GeocodeServer/findAddressCandidates?SingleLine=${encodeURIComponent(property.address)}&f=json&token=${esriToken}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.candidates && data.candidates.length > 0) {
+                        return {
+                            lat: data.candidates[0].location.y,
+                            lon: data.candidates[0].location.x,
+                            popupText: `<strong>${property.address}</strong><br>Ár: ${property.price}`
+                        };
+                    }
+                });
+        }
+
+        function geocodeMapbox(property) {
+            return fetch(`https://api.mapbox.com/geocoding/v5/mapbox.places/${encodeURIComponent(property.address)}.json?access_token=${mapboxToken}`)
+                .then(res => res.json())
+                .then(data => {
+                    if (data.features && data.features.length > 0) {
+                        return {
+                            lat: data.features[0].center[1],
+                            lon: data.features[0].center[0],
+                            popupText: `<strong>${property.address}</strong><br>Ár: ${property.price}`
+                        };
+                    }
+                });
+        }
+
+        // Ingatlanok feldolgozása mind a négy térképen
+        properties.forEach(property => {
+            // OSM
+            geocodeOSM(property).then(result => {
+                if (result) {
+                    L.marker([result.lat, result.lon]).addTo(osmMap).bindPopup(`OSM: ${result.popupText}`);
+                }
+            });
+
+            // Azure Maps
+            geocodeAzureMaps(property).then(result => {
+                if (result) {
+                    L.marker([result.lat, result.lon]).addTo(azureMap).bindPopup(`Azure Maps: ${result.popupText}`);
+                }
+            });
+
+            // Esri
+            geocodeEsri(property).then(result => {
+                if (result) {
+                    L.marker([result.lat, result.lon]).addTo(esriMap).bindPopup(`Esri: ${result.popupText}`);
+                }
+            });
+
+            // Mapbox
+            geocodeMapbox(property).then(result => {
+                if (result) {
+                    L.marker([result.lat, result.lon]).addTo(mapboxMap).bindPopup(`Mapbox: ${result.popupText}`);
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>
