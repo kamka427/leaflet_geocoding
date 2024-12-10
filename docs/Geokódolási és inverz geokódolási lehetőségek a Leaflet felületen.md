@@ -1,6 +1,7 @@
 # Geokódolási és inverz geokódolási lehetőségek a Leaflet felületen
-#### Készítette: Neszlényi Kálmán Balázs - DPU51T
-#### Térinformatika Gy., ELTE 2024
+> Készítette: Neszlényi Kálmán Balázs - DPU51T \
+> Térinformatika Gy., ELTE 2024 \
+> Projekt és legfrissebb verzió elérhető a [GitHub](https://github.com/kamka427/leaflet_geocoding)on
 
 ## Tartalomjegyzék
 
@@ -182,6 +183,8 @@ function reverseGeocode(lat, lon) {
 reverseGeocode(47.4979, 19.0402);
 ```
 
+![OSM](<../images/Screenshot 2024-12-09 at 23.56.26.png>)
+
 
 #### Előnyök és Hátrányok
 
@@ -261,6 +264,7 @@ function reverseGeocodeAzure(lat, lon) {
 // Példa használat
 reverseGeocodeAzure(47.4979, 19.0402);
 ```
+![Azure](<../images/Screenshot 2024-12-09 at 23.53.04.png>)
 
 #### Előnyök és Hátrányok
 
@@ -339,6 +343,7 @@ function reverseGeocodeEsri(lat, lon) {
 // Példa használat
 reverseGeocodeEsri(47.4979, 19.0402);
 ```
+![ESRI](<../images/Screenshot 2024-12-09 at 23.52.19.png>)
 
 #### Előnyök és Hátrányok
 
@@ -420,6 +425,9 @@ function reverseGeocodeMapbox(lat, lon) {
 // Példa használat
 reverseGeocodeMapbox(47.4979, 19.0402);
 ```
+
+![MapBox](<../images/Screenshot 2024-12-09 at 23.53.59.png>)
+
 #### Előnyök és Hátrányok
 
 **Előnyök**:
@@ -606,7 +614,7 @@ Az alábbi kód négy különböző térképet hoz létre a Leaflet könyvtár s
 </body>
 ```
 
-![Ingatlanárak összehasonlítása](../img/Ingatlanok.png)
+![Ingatlanárak összehasonlítása](../imgages/Ingatlanok.png)
 
 ---
 
