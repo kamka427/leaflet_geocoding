@@ -19,7 +19,7 @@ class OsmMap extends HTMLElement {
         map.on('click', async (e) => {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}`;
             try {
-                const response = await fetch(url, { mode: 'no-cors' });
+                const response = await fetch(url);
                 if (!response.ok) throw new Error('Network response was not OK', response);
                 const data = await response.json();
 
