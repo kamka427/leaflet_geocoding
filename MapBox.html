@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mapbox Geocoder Example</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css" />
+    <style>
+        #map {
+            height: 600px;
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Mapbox Geocoder Example</h1>
+    <div id="map"></div>
+    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css" />
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script src="https://api.mapbox.com/mapbox-gl-js/v2.13.0/mapbox-gl.js"></script>
+    <script src="https://unpkg.com/@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.min.js"></script>
+    <script>
+        // Initialize Leaflet map
+        var map = L.map('map').setView([47.4979, 19.0402], 13); // Budapest coordinates
+
+        // Add OpenStreetMap base layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+
+
+        // Add Mapbox geocoder control
+        var mapboxAccessToken = "pk.eyJ1Ijoia2Fta2E0MjciLCJhIjoiY200aGFsNjM1MDR5NTJyczRpdHZvYTQ4bCJ9.DItIMTrJxVtcx7EQcCkXCw";
+        var geocoder = L.Control.Geocoder.mapbox({ apiKey: mapboxAccessToken }
+        );
+        L.Control.geocoder({
+            geocoder: geocoder
+        }).addTo(map);
+
+        // Reverse geocoding when clicking on the map
+        map.on('click', function (e) {
+            var url = `https://api.mapbox.com/geocoding/v5/mapbox.places/${e.latlng.lng},${e.latlng.lat}.json?access_token=${mapboxAccessToken}`;
+            fetch(url)
+                .then(response => response.json())
+                .then(data => {
+                    if (data.features.length > 0) {
+                        var address = data.features[0].place_name;
+                        L.marker([e.latlng.lat, e.latlng.lng]).addTo(map)
+                            .bindPopup(`Cím: ${address}`)
+                            .openPopup();
+                    } else {
+                        alert("No address found for this location.");
+                    }
+                })
+                .catch(error => console.error("Reverse geocoding error:", error));
+        });
+    </script>
+</body>
+
+</html>
