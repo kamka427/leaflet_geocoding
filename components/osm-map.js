@@ -18,7 +18,7 @@ class OsmMap extends HTMLElement {
         // Reverse Geocoding on Map Click
         map.on('click', async (e) => {
             const url = `https://nominatim.openstreetmap.org/reverse?format=json&lat=${e.latlng.lat}&lon=${e.latlng.lng}`;
-            corsHeaders = new Headers({
+            const corsHeaders = new Headers({
                 'Access-Control-Allow-Origin': '*',
                 'Access-Control-Allow-Methods': 'GET',
                 'Access-Control-Allow-Headers': 'Content-Type',
