@@ -10,13 +10,29 @@
 	<link rel="stylesheet" href="dist/reset.css">
 	<link rel="stylesheet" href="dist/reveal.css">
 	<link rel="stylesheet" href="dist/theme/black.css">
+
+	<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+	<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+	<link rel="stylesheet" href="dist/Control.Geocoder.css" />
+	<script src="dist/Control.Geocoder.js"></script>
+
+	<script src="https://unpkg.com/esri-leaflet/dist/esri-leaflet.js"></script>
+	<script src="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js"></script>
+	<link rel="stylesheet" href="https://unpkg.com/esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css" />
+
+	<script type="module" src="osm-map.js"></script>
+	<script type="module" src="azure-map.js"></script>
+	<script type="module" src="esri-map.js"></script>
+	<script type="module" src="mapbox-map.js"></script>
+	<script type="module" src="multi-map.js"></script>
 </head>
 
 <body>
 	<div class="reveal">
 		<div class="slides">
 			<section>
-				<h1>Geokódolási API-k</h1>
+				<h1>Geokódolási Szolgáltatások</h1>
 				<h3>Geokódolás és Inverz Geokódolás a Leaflet-ben</h3>
 				<p>Készítette: Neszlényi Kálmán Balázs</p>
 				<p>Térinformatika Gy., ELTE 2024.</p>
@@ -78,6 +94,10 @@
 				</ul>
 			</section>
 			<section>
+				<h2>OSM/Nominatim Példa</h2>
+				<osm-map></osm-map>
+			</section>
+			<section>
 				<h3>Előnyök és Hátrányok</h3>
 				<ul>
 					<li><strong>Előnyök:</strong> Ingyenes, széles körben elérhető, közösségi frissítések.</li>
@@ -101,6 +121,10 @@
 					<li><strong>Skálázhatóság:</strong> Alkalmas nagy volumenű lekérdezésekhez.</li>
 					<li><strong>Integráció:</strong> Jól illeszkedik az Azure ökoszisztémába.</li>
 				</ul>
+			</section>
+			<section>
+				<h2>Azure Maps Példa</h2>
+				<azure-map></azure-map>
 			</section>
 			<section>
 				<h3>Előnyök és Hátrányok</h3>
@@ -130,6 +154,10 @@
 				</ul>
 			</section>
 			<section>
+				<h2>Esri ArcGis Geocoding Példa</h2>
+				<esri-map></esri-map>
+			</section>
+			<section>
 				<h3>Előnyök és Hátrányok</h3>
 				<ul>
 					<li><strong>Előnyök:</strong> Rendkívül pontos, részletes adatok, fejlett funkciók, globális
@@ -150,8 +178,13 @@
 				<ul>
 					<li><strong>Autocomplete funkció:</strong> Valós idejű címkiegészítés.</li>
 					<li><strong>POI keresés:</strong> Pontos helyek és érdeklődési pontok lekérdezése.</li>
-					<li><strong>Gyors válaszidő:</strong> Kifejezetten interaktív alkalmazásokhoz optimalizálva.</li>
+					<li><strong>Gyors válaszidő:</strong> Kifejezetten interaktív alkalmazásokhoz optimalizálva.
+					</li>
 				</ul>
+			</section>
+			<section>
+				<h2>Mapbox Geocoding Példa</h2>
+				<mapbox-map></mapbox-map>
 			</section>
 			<section>
 				<h3>Előnyök és Hátrányok</h3>
@@ -175,21 +208,24 @@
 					</thead>
 					<tbody>
 						<tr>
-							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Nominatim</strong></td>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Nominatim</strong>
+							</td>
 							<td style="padding: 10px;">Teljesen ingyenes</td>
 							<td style="padding: 10px;">Nincs (saját hostolás javasolt nagy projektekhez)</td>
 							<td style="padding: 10px;">1 kérés/perc (publikus endpoint)</td>
 							<td style="padding: 10px;">Ideális kisebb projektekhez, korlátozott teljesítmény.</td>
 						</tr>
 						<tr>
-							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Azure Maps</strong></td>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Azure Maps</strong>
+							</td>
 							<td style="padding: 10px;">5,000 lekérdezés/hónap</td>
 							<td style="padding: 10px;">$4.50 per 1,000 lekérdezés (5,000 felett)</td>
 							<td style="padding: 10px;">500 kérés/mp geokódolásnál, 250 inverznél</td>
 							<td style="padding: 10px;">Gyors, pontos, ideális üzleti célokra.</td>
 						</tr>
 						<tr>
-							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Esri ArcGIS</strong></td>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Esri ArcGIS</strong>
+							</td>
 							<td style="padding: 10px;">20,000 lekérdezés/hónap</td>
 							<td style="padding: 10px;">$0.50 per 1,000 lekérdezés (20,000 felett)</td>
 							<td style="padding: 10px;">Projektspecifikus korlátok</td>
@@ -227,6 +263,9 @@
 					Mindegyik API-t felhasználva geokódoltuk a címeket, majd a koordináták alapján marker-eket
 					helyeztünk el a térképen. A marker-ek popup ablakban jelenítik meg az ingatlan árát és címét.
 				</p>
+			</section>
+			<section>
+				<multi-map></multi-map>
 			</section>
 			<section>
 				<h2>Összefoglalás</h2>
