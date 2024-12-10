@@ -1,0 +1,252 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+	<title>Geokódolási és inverz geokódolási lehetőségek a Leaflet felületen</title>
+
+	<link rel="stylesheet" href="dist/reset.css">
+	<link rel="stylesheet" href="dist/reveal.css">
+	<link rel="stylesheet" href="dist/theme/black.css">
+</head>
+
+<body>
+	<div class="reveal">
+		<div class="slides">
+			<section>
+				<h1>Geokódolási API-k</h1>
+				<h3>Geokódolás és Inverz Geokódolás a Leaflet-ben</h3>
+				<p>Készítette: Neszlényi Kálmán Balázs</p>
+				<p>Térinformatika Gy., ELTE 2024.</p>
+			</section>
+			<section>
+				<h2>Tartalomjegyzék</h2>
+				<ul>
+					<li>Bevezetés</li>
+					<li>Geokódolás szerepe</li>
+					<li>Szolgáltatások bemutatása</li>
+					<li>Ingatlanos példa</li>
+					<li>Összehasonlítás és Záró gondolatok</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Bevezetés</h3>
+				<p>
+					A geokódolás és az inverz geokódolás kulcsfontosságú szerepet játszanak a térinformatikai
+					alkalmazásokban.
+					Ezek segítségével címeket alakíthatunk át koordinátákká, vagy fordítva: koordinátákhoz rendelhetünk
+					ember által
+					érthető címeket.
+				</p>
+			</section>
+			<section>
+				<h2>Példa Geokódolás és Inverz Geokódolás </h2>
+				<ul>
+					<li><strong>Geokódolás:</strong> "Budapest, Kossuth Lajos tér 1" -> (47.5072, 19.0484)</li>
+					<li><strong>Inverz Geokódolás:</strong> (47.5072, 19.0484) -> "Budapest, Kossuth Lajos tér 1"</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Kipróbált Geokódolási Szolgáltatások</h2>
+				<ul>
+					<li><strong>OpenStreetMap (OSM) / Nominatim:</strong> Nyílt forráskódú és ingyenes geokódolási
+						megoldás.</li>
+					<li><strong>Azure Maps:</strong> Microsoft által támogatott, prémium adatminőségű API. A Bing Maps
+						utódja.</li>
+					<li><strong>Esri ArcGIS Geocoder:</strong> Magas szintű térinformatikai funkciókat kínáló prémium
+						szolgáltatás.</li>
+					<li><strong>Mapbox Geocoder:</strong> Gyors, modern API, amely interaktív térképekhez ideális.</li>
+				</ul>
+			</section>
+			<section>
+				<h2>OpenStreetMap (OSM) / Nominatim</h2>
+				<p>
+					Az OpenStreetMap (OSM) egy nyílt forráskódú térképszolgáltatás, amelyet a közösség épít és tart
+					fenn.
+					A geokódolást a <strong>Nominatim API</strong> segítségével végezhetjük, amely lehetővé teszi a
+					címek koordinátává alakítását
+					és fordítva.
+				</p>
+			</section>
+			<section>
+				<h3>Főbb tulajdonságok</h3>
+				<ul>
+					<li><strong>Ingyenes:</strong> Nincs szükség API kulcsra.</li>
+					<li><strong>Közösségi adatok:</strong> A lefedettség régiófüggő.</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Előnyök és Hátrányok</h3>
+				<ul>
+					<li><strong>Előnyök:</strong> Ingyenes, széles körben elérhető, közösségi frissítések.</li>
+					<li><strong>Hátrányok:</strong> Lassabb válaszidő, korlátozott sebesség nagy adatmennyiségnél.</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Azure Maps</h2>
+				<p>
+					Az Azure Maps a Microsoft által biztosított prémium geokódolási API, amely pontos adatokat és gyors
+					válaszidőt kínál.
+					Kiváló választás üzleti és térinformatikai alkalmazások számára, különösen akkor, ha megbízható
+					globális lefedettségre van szükség.
+				</p>
+			</section>
+			<section>
+				<h3>Főbb tulajdonságok</h3>
+				<ul>
+					<li><strong>Pontos adatok:</strong> Hivatalos forrásokból származó, rendszeresen frissített adatok.
+					</li>
+					<li><strong>Skálázhatóság:</strong> Alkalmas nagy volumenű lekérdezésekhez.</li>
+					<li><strong>Integráció:</strong> Jól illeszkedik az Azure ökoszisztémába.</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Előnyök és Hátrányok</h3>
+				<ul>
+					<li><strong>Előnyök:</strong> Gyors, pontos, magas adatminőség, globális lefedettség.</li>
+					<li><strong>Hátrányok:</strong> Fizetős, API kulcs szükséges, komplexebb beállítás kezdők számára.
+					</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Esri ArcGIS Geocoder</h2>
+				<p>
+					Az Esri ArcGIS Geocoder egy prémium geokódolási szolgáltatás, amelyet az ArcGIS térinformatikai
+					platform részeként kínálnak.
+					Kiváló adatminőséget és fejlett térinformatikai funkciókat biztosít, különösen nagy precizitást
+					igénylő projektekhez.
+				</p>
+			</section>
+			<section>
+				<h3>Főbb tulajdonságok</h3>
+				<ul>
+					<li><strong>Metaadatok:</strong> Részletes cím- és helyinformációk.</li>
+					<li><strong>ArcGIS integráció:</strong> Tökéletesen illeszkedik az Esri térinformatikai
+						ökoszisztémába.</li>
+					<li><strong>Magas pontosság:</strong> Ideális üzleti alkalmazásokhoz és térinformatikai
+						elemzésekhez.</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Előnyök és Hátrányok</h3>
+				<ul>
+					<li><strong>Előnyök:</strong> Rendkívül pontos, részletes adatok, fejlett funkciók, globális
+						lefedettség.</li>
+					<li><strong>Hátrányok:</strong> Fizetős, API kulcs szükséges, bonyolultabb kezdők számára.</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Mapbox Geocoder</h2>
+				<p>
+					A Mapbox Geocoder egy modern, gyors és megbízható geokódolási API, amelyet elsősorban interaktív
+					térképekhez és valós idejű keresési alkalmazásokhoz terveztek.
+					Az API az OpenStreetMap adataira és saját adatbázisára épül, globális lefedettséget biztosítva.
+				</p>
+			</section>
+			<section>
+				<h3>Főbb tulajdonságok</h3>
+				<ul>
+					<li><strong>Autocomplete funkció:</strong> Valós idejű címkiegészítés.</li>
+					<li><strong>POI keresés:</strong> Pontos helyek és érdeklődési pontok lekérdezése.</li>
+					<li><strong>Gyors válaszidő:</strong> Kifejezetten interaktív alkalmazásokhoz optimalizálva.</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Előnyök és Hátrányok</h3>
+				<ul>
+					<li><strong>Előnyök:</strong> Gyors, fejlett funkciók (autocomplete, POI keresés), globális
+						lefedettség.</li>
+					<li><strong>Hátrányok:</strong> Fizetős, API kulcs szükséges, régiófüggő adatminőség.</li>
+				</ul>
+			</section>
+			<section>
+				<h2>Geokódolási API-k Árazása</h2>
+				<table style="width: 100%; border-collapse: collapse; text-align: left; font-size: 20px;">
+					<thead>
+						<tr>
+							<th style="border-bottom: 2px solid #ccc; padding: 10px;">API</th>
+							<th style="border-bottom: 2px solid #ccc; padding: 10px;">Ingyenes keret</th>
+							<th style="border-bottom: 2px solid #ccc; padding: 10px;">Fizetős csomag</th>
+							<th style="border-bottom: 2px solid #ccc; padding: 10px;">Rate Limit</th>
+							<th style="border-bottom: 2px solid #ccc; padding: 10px;">Megjegyzés</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Nominatim</strong></td>
+							<td style="padding: 10px;">Teljesen ingyenes</td>
+							<td style="padding: 10px;">Nincs (saját hostolás javasolt nagy projektekhez)</td>
+							<td style="padding: 10px;">1 kérés/perc (publikus endpoint)</td>
+							<td style="padding: 10px;">Ideális kisebb projektekhez, korlátozott teljesítmény.</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Azure Maps</strong></td>
+							<td style="padding: 10px;">5,000 lekérdezés/hónap</td>
+							<td style="padding: 10px;">$4.50 per 1,000 lekérdezés (5,000 felett)</td>
+							<td style="padding: 10px;">500 kérés/mp geokódolásnál, 250 inverznél</td>
+							<td style="padding: 10px;">Gyors, pontos, ideális üzleti célokra.</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Esri ArcGIS</strong></td>
+							<td style="padding: 10px;">20,000 lekérdezés/hónap</td>
+							<td style="padding: 10px;">$0.50 per 1,000 lekérdezés (20,000 felett)</td>
+							<td style="padding: 10px;">Projektspecifikus korlátok</td>
+							<td style="padding: 10px;">Magas pontosságú, részletes adatok.</td>
+						</tr>
+						<tr>
+							<td style="border-bottom: 1px solid #ccc; padding: 10px;"><strong>Mapbox</strong></td>
+							<td style="padding: 10px;">50,000 lekérdezés/hónap</td>
+							<td style="padding: 10px;">$0.75 per 1,000 lekérdezés (50,000 felett, 1M-ig)</td>
+							<td style="padding: 10px;">Optimalizált nagy terhelésre</td>
+							<td style="padding: 10px;">Interaktív alkalmazásokhoz, gyors válaszidővel.</td>
+						</tr>
+					</tbody>
+				</table>
+			</section>
+			<section>
+				<h2>Ingatlanos Példa</h2>
+				<p>
+					Az alábbi példában bemutattuk, hogyan használhatók a geokódolási API-k ingatlanok címének
+					koordinátákká alakítására és azok árának megjelenítésére interaktív térképen.
+				</p>
+			</section>
+			<section>
+				<h3>Példa adatok formátuma</h3>
+				<ul>
+					<li><strong>Cím:</strong> Budapest, Kossuth Lajos tér 1</li>
+					<li><strong>Ár:</strong> 120,000,000 Ft</li>
+					<li><strong>Cím:</strong> Budapest, Andrássy út 60</li>
+					<li><strong>Ár:</strong> 95,000,000 Ft</li>
+				</ul>
+			</section>
+			<section>
+				<h3>Megoldás</h3>
+				<p>
+					Mindegyik API-t felhasználva geokódoltuk a címeket, majd a koordináták alapján marker-eket
+					helyeztünk el a térképen. A marker-ek popup ablakban jelenítik meg az ingatlan árát és címét.
+				</p>
+			</section>
+			<section>
+				<h2>Összefoglalás</h2>
+				<ul>
+					<li><strong>OSM:</strong> Ingyenes és közösségi, de lassú és régiófüggő adatminőség.</li>
+					<li><strong>Azure Maps:</strong> Gyors, pontos, üzleti célokra ideális, de fizetős.</li>
+					<li><strong>Esri ArcGIS:</strong> Magas pontosságú és fejlett térinformatikai funkciók, de
+						költséges.</li>
+					<li><strong>Mapbox:</strong> Ideális interaktív alkalmazásokhoz, gyors, de fizetős.</li>
+				</ul>
+			</section>
+		</div>
+	</div>
+
+	<script src="dist/reveal.js"></script>
+	<script>
+		Reveal.initialize({
+			hash: true,
+		});
+	</script>
+</body>
+
+</html>
